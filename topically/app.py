@@ -6,13 +6,16 @@
 # You may obtain a copy of the License in the LICENSE file at the top
 # level of this repository.
 import getpass
+
 import cohere
 import numpy as np
+
 from .cluster_namers import ClusterNamer
 from .prompts.prompts import generic_cluster_naming_prompt
 
 
 class Topically(object):
+
     def __init__(self, api_key: str = None, mockAPI: bool = False):
         if mockAPI:
             self.co = MockCohereAPI()
@@ -51,9 +54,7 @@ class Topically(object):
         if prompt == '':
             prompt = generic_cluster_naming_prompt
         # Instantiate ClusterNamer,
-        cluster_namer = ClusterNamer(self.co,
-                                     prompt,
-                                     num_generations=num_generations)
+        cluster_namer = ClusterNamer(self.co, prompt, num_generations=num_generations)
 
         # Get the unique cluster assignments
         unique_cluster_assignments = np.unique(cluster_assignments)
@@ -119,8 +120,10 @@ class MockCohereAPI:
         pass
 
     def generate(self, **kwargs):
-        mock_gens_list = [cohere.generation.Generation(text='two', likelihood=-10, token_likelihoods=None),
-                          cohere.generation.Generation(text='one', likelihood=-5, token_likelihoods=None)]
+        mock_gens_list = [
+            cohere.generation.Generation(text='two', likelihood=-10, token_likelihoods=None),
+            cohere.generation.Generation(text='one', likelihood=-5, token_likelihoods=None)
+        ]
         mock_gens = cohere.generation.Generations(generations=mock_gens_list, return_likelihoods=None)
 
         return mock_gens

@@ -12,11 +12,8 @@ from sklearn.base import BaseEstimator
 
 
 class ClusterNamer(BaseEstimator):
-    def __init__(self, co,
-                 prompt: str = '',
-                 num_generations: int = 1,
-                 temperature=0.6
-                 ):
+
+    def __init__(self, co, prompt: str = '', num_generations: int = 1, temperature=0.6):
         self.co = co
         self.prompt = prompt
         self.num_generations = num_generations
@@ -30,13 +27,14 @@ class ClusterNamer(BaseEstimator):
         # Add the data of the current cluster we want to label
         prompt = self.make_prompt(cluster_example_texts)
         # print('\n###\n', prompt, '\n###\n')
-        request = self.co.generate(model='xlarge',
-                                   prompt=prompt,
-                                   max_tokens=50,
-                                   # temperature=self.temperature,
-                                   num_generations=self.num_generations,
-                                   return_likelihoods='GENERATION',
-                                   stop_sequences=["\n"])
+        request = self.co.generate(
+            model='xlarge',
+            prompt=prompt,
+            max_tokens=50,
+            # temperature=self.temperature,
+            num_generations=self.num_generations,
+            return_likelihoods='GENERATION',
+            stop_sequences=["\n"])
 
         return request.generations
 

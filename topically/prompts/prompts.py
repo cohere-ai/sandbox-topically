@@ -52,7 +52,6 @@ Cluster name: Shipping and delivery issues
 ---
 """
 
-
 customer_service_tweets_prompt = """
 This is a list of clusters of messages sent by customers to the customer service department of ecommerce company. Each cluster contains a collection of messages about the same topic. In addition to a sample of the messages, a list of keywords describing the collection is mentioned in addition to the name of the collection. The name of each cluster is a short, highly-descriptive title
 ---

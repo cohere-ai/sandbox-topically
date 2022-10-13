@@ -12,9 +12,7 @@ import altair as alt
 import pandas as pd
 
 
-def interactive_scatterplot(df: pd.DataFrame,
-                            fields_in_tooltip: List[str] = None,
-                            title: str = ''):
+def interactive_scatterplot(df: pd.DataFrame, fields_in_tooltip: List[str] = None, title: str = ''):
     """
     Create interactive scatterplot. Basic plot showing point details on hover. Single color for all the points.
 
@@ -99,8 +97,8 @@ def interactive_clusters_scatterplot(df: pd.DataFrame,
                 labelFontSize=12)),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
         tooltip=fields_in_tooltip).properties(
-        width=1000,
-        height=700).add_selection(selection).configure_legend(labelLimit=0).configure_view(strokeWidth=0).configure(
-        background="#F6f6f6").properties(title=title).configure_range(category={'scheme': 'category20'})
+            width=1000,
+            height=700).add_selection(selection).configure_legend(labelLimit=0).configure_view(strokeWidth=0).configure(
+                background="#F6f6f6").properties(title=title).configure_range(category={'scheme': 'category20'})
 
     return chart

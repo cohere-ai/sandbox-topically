@@ -1,8 +1,10 @@
-from topically import Topically, cluster_namers
-from topically.app import MockCohereAPI
-from topically.cluster_namers import ClusterNamer
 import cohere
 import numpy as np
+
+from topically import cluster_namers
+from topically import Topically
+from topically.app import MockCohereAPI
+from topically.cluster_namers import ClusterNamer
 
 
 def test_cluster_namer():
@@ -26,8 +28,7 @@ def test_cluster_namer():
     """ Test that test_cluster_namer() returns n_samples names """
     app = Topically('', mockAPI=True)
 
-    cluster_names = app.name_clusters(([0, 0, 0], [1, 1, 1]),
-                                      num_generations=5)
+    cluster_names = app.name_clusters(([0, 0, 0], [1, 1, 1]), num_generations=5)
 
     print(cluster_names)
     assert cluster_names == ['one', 'one', 'one']

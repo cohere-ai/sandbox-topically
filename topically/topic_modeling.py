@@ -6,12 +6,11 @@
 # You may obtain a copy of the License in the LICENSE file at the top
 # level of this repository.
 
+from ctfidf import ClassTFIDF
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
 from sklearn.feature_extraction.text import CountVectorizer
-
-from ctfidf import ClassTFIDF
 
 
 def cluster_kmeans(embeds, n_clusters):
@@ -31,7 +30,7 @@ def extract_keywords(df, classes, max_df=0.6):
                                        stop_words="english").fit(documents_per_topic.Document)
     count = count_vectorizer.transform(documents_per_topic.Document)
     words = count_vectorizer.get_feature_names()
-    
+
     ctfidf = ClassTFIDF().fit_transform(count).toarray()
 
     words_per_class = {
