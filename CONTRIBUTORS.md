@@ -5,7 +5,7 @@ should:
 repository.
 2. Leave comments, and use docstrings where appropriate.
 3. Add unit tests for any new functionality you introduce, if a set of test cases
-are already set up in the respository.
+are already set up in the repository.
 4. Use git commit messages to leave an informative trace of what additions and
 changes were made.
 5. Write an informative high level description of the pull request, changes made,
