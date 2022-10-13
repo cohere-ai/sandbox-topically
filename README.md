@@ -29,21 +29,8 @@ This is a suite of tools that help make sense of large text archives using large
 Examples:
 
 - Customer service tweets
-- News headlines ()
-
-# Contributors
-
-If you would like to contribute to this project, please read `CONTRIBUTORS.md`
-in this repository, and sign the [Contributor License Agreement](https://TODO)
-before submitting any pull requests.
+- News headlines
 
 # License
 
 Topically has an MIT license, as found in the LICENSE file.
-
-# cohere-topic-modeling
-
-Topic modeling using Cohere's language AI
-
-To run the topic modeling streamlit, create a `data/` folder and
-place [these two files](https://drive.google.com/drive/u/0/folders/1ZNdnuPEO2BjYVrRMOmhKzJff39MVUQMB) inside it.
