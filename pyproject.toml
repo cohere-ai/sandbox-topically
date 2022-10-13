@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "topically"
+version = "0.1.0"
+description = ""
+authors = ["Jay Alammar <jay@cohere.ai>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+cohere = "^2.1"
+umap-learn = "^0.5"
+streamlit = "^1.12"
+altair = "^4.2"
+pandas = "^1.4"
+matplotlib = "^3.5"
+
+[tool.poetry.dev-dependencies]
+yapf = "^0.32"
+toml = "^0.10"
+flake8 = "^5.0"
+isort = "^5.10"
+autoflake = "^1.6"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+[tool.isort]
+profile = "google"
+skip_glob = "**/__init__.py"
+line_length = 120
+force_grid_wrap = 0
+use_parentheses = true
+multi_line_output = 0
+float_to_top = true
+
+[tool.yapf]
+based_on_style = "google"
+indent_width = 4
+column_limit = 120
+
+[tool.yapfignore]
+ignore_patterns = [
+    ".eggs/*",
+    ".git/*"
+]
