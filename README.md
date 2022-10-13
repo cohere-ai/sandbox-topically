@@ -22,7 +22,7 @@
 ```
 
 **Maintainer:** [jalammar](https://github.com/jalammar) \
-**Project maintained until at least: ** 2023-04-30
+**Project maintained until at least:** 2023-04-30
 
 This is a suite of tools that help make sense of large text archives using large language models.
 
