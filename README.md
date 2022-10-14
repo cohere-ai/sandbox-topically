@@ -24,6 +24,9 @@
 **Maintainer:** [jalammar](https://github.com/jalammar) \
 **Project maintained until at least:** 2023-04-30
 
+# Topically
+
+
 This is a suite of tools that help make sense of large text archives using large language models.
 
 Examples:
@@ -31,6 +34,19 @@ Examples:
 - Customer service tweets
 - News headlines
 
-# License
+# Usage Example: Topically + BERTopic
+Use Topically to name clusters in the course of topic modeling with tools like BERTopic.
 
+
+
+# Get support
+If you have any questions or comments, please file an issue or reach out to us on [Discord](https://discord.gg/co-mmunity).
+
+# Contributors
+If you would like to contribute to this project, please read `CONTRIBUTORS.md`
+in this repository, and sign the Contributor License Agreement before submitting
+any pull requests. A link to sign the Cohere CLA will be generated the first time 
+you make a pull request to a Cohere repository.
+
+# License
 Topically has an MIT license, as found in the LICENSE file.
