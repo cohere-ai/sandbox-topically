@@ -29,7 +29,7 @@
 Topically is a suite of tools that help make sense of text collections (messages, articles, emails, news headlines) using large language models.
 
 
-Topically first feature is to name clusters of texts based on their content. For example, here are news headlines from the machinelearning and investing subreddits, and the names suggested for them by topically:
+Topically's first feature is to name clusters of texts based on their content. For example, here are news headlines from the machinelearning and investing subreddits, and the names suggested for them by topically:
 
 <img src="./assets/topically-name_cluster.png" />
 
