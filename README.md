@@ -26,19 +26,24 @@
 
 # Topically
 
+Topically is a suite of tools that help make sense of text collections (messages, articles, emails, news headlines) using large language models.
+
+
+Topically first feature is to name clusters of texts based on their content. For example, here are news headlines from the machinelearning and investing subreddits, and the names suggested for them by topically:
+
 <img src="./assets/topically-name_cluster.png" />
 
-This is a suite of tools that help make sense of large text archives using large language models.
-
-Examples:
-
-- Customer service tweets
-- News headlines
 
 # Usage Example: Topically + BERTopic
-Use Topically to name clusters in the course of topic modeling with tools like BERTopic.
+Use Topically to name clusters in the course of topic modeling with tools like BERTopic. Get the cluster assignments from BERTopic, and name the clusters with topically.
 
+# Installation
 
+`pip install topically`
+
+Optionally, you can also install topically with BERTopic:
+
+`pip install topically[bertopic]`
 
 # Get support
 If you have any questions or comments, please file an issue or reach out to us on [Discord](https://discord.gg/co-mmunity).
