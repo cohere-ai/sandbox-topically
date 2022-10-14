@@ -45,6 +45,15 @@ Optionally, you can also install topically with BERTopic:
 
 `pip install topically[bertopic]`
 
+
+# How it works
+
+Topically uses a generative langauge model (GPT) to assign a name to the text cluster. It sends a request to Cohere's managed model (get an [API key](https://os.cohere.ai/register) and use it for free for prototyping).
+
+To generate the titles, topically uses a couple of bundled prompts. To get the best names for your use case, it's best to edit the prompt to add more information about the context, and add good cluster names for 3-5 of your clusters.
+
+This works best on short texts (given the context length limitations of GPT models). If you're working with long texts, you may experiment with excerpts or summaries of the texts.
+
 # Get support
 If you have any questions or comments, please file an issue or reach out to us on [Discord](https://discord.gg/co-mmunity).
 
