@@ -26,6 +26,7 @@
 
 # Topically
 
+![https://github.com/cohere-ai/sandbox-topically/raw/main/assets/topically-name_cluster.png]()
 
 This is a suite of tools that help make sense of large text archives using large language models.
 
