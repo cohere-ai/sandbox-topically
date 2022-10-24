@@ -37,7 +37,28 @@ Topically's first feature is to name clusters of texts based on their content. F
 # Usage Example: Topically + BERTopic
 Use Topically to name clusters in the course of topic modeling with tools like BERTopic. Get the cluster assignments from BERTopic, and name the clusters with topically.
 
-`TODO: Add code example`
+```python
+
+from bertopic import BERTopic
+from topically import Topically
+
+# Load and initialize BERTopic
+topic_model = BERTopic(nr_topics=10)
+
+# df is a dataframe. df['title'] is the column of text we're modeling
+df['topic'], probabilities = topic_model.fit_transform(df['title'], embeds)
+
+# Load topically
+app = Topically('cohere_api_key')
+
+# name clusters
+df['cluster_names'] = app.name_clusters((df['title'], df['topic']))
+
+df[['title', 'topic', 'cluster_names']]
+```
+
+
+<img src="./assets/topically-name_topics-example.png" />
 
 # Installation
 

@@ -39,7 +39,6 @@ def extract_keywords(df, classes, max_df=0.6):
     df['cluster'] = classes
     df['keywords'] = df['cluster'].map(lambda topic_num: ", ".join(np.array(words_per_class[topic_num])[:]))
 
-    # def convert_dict_to_dataframe(dict):
     keywords_list = []
     for k, v in words_per_class.items():
         keywords = ", ".join(v)

@@ -9,10 +9,11 @@ import getpass
 
 import cohere
 import numpy as np
+import logging
 
 from .cluster_namers import ClusterNamer
 from .prompts.prompts import generic_cluster_naming_prompt
-
+from concurrent.futures import ThreadPoolExecutor
 
 class Topically(object):
 
@@ -25,7 +26,7 @@ class Topically(object):
 
             self.co = cohere.Client(api_key)
 
-    def name_clusters(self, X, prompt: str = '', num_generations=1):
+    def name_clusters(self, X, prompt: str = '', num_generations=1, num_sample_texts=10):
         """
         Name clusters using the default prompt. For each cluster, calls the Cohere generate end-point to assign a name to the cluster.
         Example: If we have ten samples clustered into two clusters (0,1), this makes two generation API calls. That results in two cluster names. We return n_samples,
@@ -62,26 +63,42 @@ class Topically(object):
         # Create a dictionary to store the cluster names for each cluster
         cluster_names = {}
 
-        # Loop over each cluster
-        for cluster_number in unique_cluster_assignments:
-            # Get the texts in this cluster
-            cluster_texts = texts[cluster_assignments == cluster_number]
 
-            # Get the cluster name
-            # cluster_name = self.name_cluster(cluster_texts)
-            cluster_names[cluster_number] = cluster_namer.predict(cluster_texts)
+
+        extracted = []
+        cluster_names = {}
+
+        def name_cluster(cluster_number):
+            # Get the texts in this cluster, sample from them
+            cluster_texts = texts[cluster_assignments == cluster_number]
+            sample_texts_from_cluster = cluster_texts.sample(num_sample_texts)
+            cluster_name = cluster_namer.predict(sample_texts_from_cluster)
+
+            logging.info(f'naming cluster {cluster_number}: {cluster_name}')
+
+            return cluster_number, cluster_name
+
+
+        # Name all clusters in parallel
+        with ThreadPoolExecutor(max_workers=8) as executor:
+            for (cluster_number, cluster_name) in executor.map(name_cluster, unique_cluster_assignments):
+                cluster_names[cluster_number] = cluster_name
+                # extracted.append(str(i).strip())
+
+        # Save results
+        # test_df['extracted_text'] = extracted
+
+        # Loop over each cluster
+        # for cluster_number in unique_cluster_assignments:
+        #
+        #     cluster_texts = texts[cluster_assignments == cluster_number]
+        #     sample_texts_from_cluster = num_sample_texts.sample(num_sample_texts)
+        #
+        #     # Get the cluster name
+        #     cluster_names[cluster_number] = cluster_namer.predict(sample_texts_from_cluster)
 
         # Create a list to store the cluster assignments per sample
         assigned_cluster_names = [cluster_names[cluster_number] for cluster_number in cluster_assignments]
-
-        # Loop over each text
-        # TODO : Likely quicker if we just map
-        # for text, cluster_number in zip(texts, cluster_assignments):
-        #     # Get the cluster name
-        #     cluster_name = cluster_names[cluster_number]
-        #
-        #     # Store the cluster name
-        #     assigned_cluster_names.append(cluster_name)
 
         return assigned_cluster_names
 

@@ -1,3 +1,11 @@
+# Copyright (c) 2022 Cohere Inc. and its affiliates.
+#
+# Licensed under the MIT License (the "License");
+# you may not use this file except in compliance with the License.
+#
+# You may obtain a copy of the License in the LICENSE file at the top
+# level of this repository.
+
 generic_cluster_naming_prompt = """
 This is a list of clusters of messages . Each cluster contains a collection of messages about the same topic. Then a name of collection is mentioned. The name of each cluster is a short, highly-descriptive title
 ---
