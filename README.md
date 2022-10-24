@@ -37,7 +37,7 @@ Topically's first feature is to name clusters of texts based on their content. F
 # Usage Example: Topically + BERTopic
 Use Topically to name clusters in the course of topic modeling with tools like BERTopic. Get the cluster assignments from BERTopic, and name the clusters with topically. Here's example code and a colab notebook demonstrating this.
 
-<a href="https://colab.research.google.com/github/cohere-ai/sandbox-topically/blob/main/notebooks/Intro%20-%20Topically%20with%20BERTopic.ipynb" target="_parent\"><img src="https://colab.research.google.com/assets/colab-badge.svg\" alt="Open In Colab"/></a>
+<a href="https://colab.research.google.com/github/cohere-ai/sandbox-topically/blob/main/notebooks/Intro%20-%20Topically%20with%20BERTopic.ipynb" target="_parent\"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 Code excerpt:
 
