@@ -26,12 +26,11 @@ class ClusterNamer(BaseEstimator):
     def generate(self, cluster_example_texts):
         # Add the data of the current cluster we want to label
         prompt = self.make_prompt(cluster_example_texts)
-        # print('\n###\n', prompt, '\n###\n')
+
         request = self.co.generate(
             model='xlarge',
             prompt=prompt,
             max_tokens=50,
-            # temperature=self.temperature,
             num_generations=self.num_generations,
             return_likelihoods='GENERATION',
             stop_sequences=["\n"])
@@ -63,6 +62,7 @@ def rerank_by_likelihood(generations: cohere.generation.Generations):
            The same list of generations, except ordered by highest likelihoods
 
     """
+    
     # Sort by most likely, most likely generations first
     likelihoods = np.array([gen.likelihood for gen in generations])
     texts = np.array([gen.text.strip() for gen in generations])

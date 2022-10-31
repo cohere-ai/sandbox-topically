@@ -5,6 +5,7 @@
 #
 # You may obtain a copy of the License in the LICENSE file at the top
 # level of this repository.
+
 import getpass
 
 import cohere
@@ -14,6 +15,7 @@ import logging
 from .cluster_namers import ClusterNamer
 from .prompts.prompts import generic_cluster_naming_prompt
 from concurrent.futures import ThreadPoolExecutor
+
 
 class Topically(object):
 
@@ -25,6 +27,7 @@ class Topically(object):
                 api_key = getpass.getpass('Enter your Cohere API Key')
 
             self.co = cohere.Client(api_key)
+
 
     def name_clusters(self, X, prompt: str = '', num_generations=1, num_sample_texts=10):
         """
@@ -54,7 +57,8 @@ class Topically(object):
 
         if prompt == '':
             prompt = generic_cluster_naming_prompt
-        # Instantiate ClusterNamer,
+
+        # Instantiate ClusterNamer
         cluster_namer = ClusterNamer(self.co, prompt, num_generations=num_generations)
 
         # Get the unique cluster assignments
@@ -83,24 +87,12 @@ class Topically(object):
         with ThreadPoolExecutor(max_workers=8) as executor:
             for (cluster_number, cluster_name) in executor.map(name_cluster, unique_cluster_assignments):
                 cluster_names[cluster_number] = cluster_name
-                # extracted.append(str(i).strip())
-
-        # Save results
-        # test_df['extracted_text'] = extracted
-
-        # Loop over each cluster
-        # for cluster_number in unique_cluster_assignments:
-        #
-        #     cluster_texts = texts[cluster_assignments == cluster_number]
-        #     sample_texts_from_cluster = num_sample_texts.sample(num_sample_texts)
-        #
-        #     # Get the cluster name
-        #     cluster_names[cluster_number] = cluster_namer.predict(sample_texts_from_cluster)
 
         # Create a list to store the cluster assignments per sample
         assigned_cluster_names = [cluster_names[cluster_number] for cluster_number in cluster_assignments]
 
         return assigned_cluster_names
+
 
     def name_cluster(self, cluster_texts, temperature=0.6, num_generations=1):
         """
@@ -131,7 +123,7 @@ class Topically(object):
 
 
 class MockCohereAPI:
-    """ Mock Cohere API for testing """
+    """Mock Cohere API for testing."""
 
     def __init__(self):
         pass

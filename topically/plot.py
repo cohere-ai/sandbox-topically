@@ -36,6 +36,7 @@ def interactive_scatterplot(df: pd.DataFrame, fields_in_tooltip: List[str] = Non
            The interactive altair chart. Can be the displayed or saved.
 
     """
+
     if fields_in_tooltip is None:
         fields_in_tooltip = ['']
     chart = alt.Chart(df).mark_circle(size=20).encode(
@@ -75,25 +76,22 @@ def interactive_clusters_scatterplot(df: pd.DataFrame,
             The interactive altair chart. Can be the displayed or saved.
 
      """
+
     if fields_in_tooltip is None:
         fields_in_tooltip = ['']
 
     selection = alt.selection_multi(fields=[title_column], bind='legend')
 
     chart = alt.Chart(df).transform_calculate(
-        # url='https://news.ycombinator.com/item?id=' + alt.datum.id
     ).mark_circle(size=20, stroke='#666', strokeWidth=1, opacity=0.1).encode(
-        x=  # 'x',
-        alt.X('x', scale=alt.Scale(zero=False), axis=alt.Axis(labels=False, ticks=False, domain=False)),
+        x=alt.X('x', scale=alt.Scale(zero=False), axis=alt.Axis(labels=False, ticks=False, domain=False)),
         y=alt.Y('y', scale=alt.Scale(zero=False), axis=alt.Axis(labels=False, ticks=False, domain=False)),
-        # href='url:N',
         color=alt.Color(
             f'{title_column}:N',
             legend=alt.Legend(
                 columns=2,
                 symbolLimit=0,
                 orient='right',
-                # legendX=130, legendY=-40,
                 labelFontSize=12)),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
         tooltip=fields_in_tooltip).properties(
