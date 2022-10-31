@@ -96,7 +96,6 @@ Keywords for messages in the cluster: warranty, returned, exchange, return item,
 Cluster name: Returns and exchanges of defective, damaged, or missing products
 ---"""
 
-
 news_article_headlines_prompt = """
 This is a list of clusters of news article headlines. Each cluster contains a collection of headlines about the same topic. In addition to a sample of the headlines, the name of the cluster is mentioned. The name of each cluster is a short, highly-descriptive title.
 ---

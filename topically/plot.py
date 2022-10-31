@@ -82,17 +82,11 @@ def interactive_clusters_scatterplot(df: pd.DataFrame,
 
     selection = alt.selection_multi(fields=[title_column], bind='legend')
 
-    chart = alt.Chart(df).transform_calculate(
-    ).mark_circle(size=20, stroke='#666', strokeWidth=1, opacity=0.1).encode(
+    chart = alt.Chart(df).transform_calculate().mark_circle(size=20, stroke='#666', strokeWidth=1, opacity=0.1).encode(
         x=alt.X('x', scale=alt.Scale(zero=False), axis=alt.Axis(labels=False, ticks=False, domain=False)),
         y=alt.Y('y', scale=alt.Scale(zero=False), axis=alt.Axis(labels=False, ticks=False, domain=False)),
-        color=alt.Color(
-            f'{title_column}:N',
-            legend=alt.Legend(
-                columns=2,
-                symbolLimit=0,
-                orient='right',
-                labelFontSize=12)),
+        color=alt.Color(f'{title_column}:N',
+                        legend=alt.Legend(columns=2, symbolLimit=0, orient='right', labelFontSize=12)),
         opacity=alt.condition(selection, alt.value(1), alt.value(0.2)),
         tooltip=fields_in_tooltip).properties(
             width=1000,

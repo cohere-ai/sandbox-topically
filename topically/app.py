@@ -6,15 +6,15 @@
 # You may obtain a copy of the License in the LICENSE file at the top
 # level of this repository.
 
+from concurrent.futures import ThreadPoolExecutor
 import getpass
+import logging
 
 import cohere
 import numpy as np
-import logging
 
 from .cluster_namers import ClusterNamer
 from .prompts.prompts import generic_cluster_naming_prompt
-from concurrent.futures import ThreadPoolExecutor
 
 
 class Topically(object):
@@ -27,7 +27,6 @@ class Topically(object):
                 api_key = getpass.getpass('Enter your Cohere API Key')
 
             self.co = cohere.Client(api_key)
-
 
     def name_clusters(self, X, prompt: str = '', num_generations=1, num_sample_texts=10):
         """
@@ -67,8 +66,6 @@ class Topically(object):
         # Create a dictionary to store the cluster names for each cluster
         cluster_names = {}
 
-
-
         extracted = []
         cluster_names = {}
 
@@ -82,7 +79,6 @@ class Topically(object):
 
             return cluster_number, cluster_name
 
-
         # Name all clusters in parallel
         with ThreadPoolExecutor(max_workers=8) as executor:
             for (cluster_number, cluster_name) in executor.map(name_cluster, unique_cluster_assignments):
@@ -92,7 +88,6 @@ class Topically(object):
         assigned_cluster_names = [cluster_names[cluster_number] for cluster_number in cluster_assignments]
 
         return assigned_cluster_names
-
 
     def name_cluster(self, cluster_texts, temperature=0.6, num_generations=1):
         """
