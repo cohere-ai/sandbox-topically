@@ -27,13 +27,11 @@
 # A picture is worth a thousand sentences
 
 <img src="./assets/topic-modeling-picture-thousand-texts.png" />
-When you want to explore thousands or millions of texts (messages, emails, news headlines), topic modeling tools help you make sense of them in an instance.
+When you want to explore thousands or millions of texts (messages, emails, news headlines), topic modeling tools help you make sense of them rapidly and visually.
 
 # Topically
 
 Topically is a \[work-in-progress\] suite of tools that help make sense of text collections (messages, articles, emails, news headlines) using large language models.
-
-<img src="./assets/topically_name_topics.png" />"
 
 Topically's first feature is to name clusters of texts based on their content. For example, here are news headlines from the machinelearning and investing subreddits, and the names suggested for them by topically:
 
@@ -80,7 +78,13 @@ Output:
 In this simple example, we know the cluster assignments. In actual applications, a topic modeling library like BERTopic can cluster the texts for us, and then we can name them with topically. 
 
 # Usage Example: Topically + BERTopic
-Use Topically to name clusters in the course of topic modeling with tools like BERTopic. Get the cluster assignments from BERTopic, and name the clusters with topically. Here's example code and a colab notebook demonstrating this.
+Use Topically to name clusters in the course of topic modeling with tools like BERTopic. Get the cluster assignments from BERTopic, and name the clusters with topically. This improves on the keyword topic labels (and can build upon them).
+
+
+<img src="./assets/topically_name_topics.png" />
+
+
+Here's example code and a colab notebook demonstrating this.
 
 <a href="https://colab.research.google.com/github/cohere-ai/sandbox-topically/blob/main/notebooks/Intro%20-%20Topically%20with%20BERTopic.ipynb" target="_parent\"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
@@ -101,9 +105,9 @@ df['topic'], probabilities = topic_model.fit_transform(df['title'], embeds)
 app = Topically('cohere_api_key')
 
 # name clusters
-df['topic_names'] = app.name_topics((df['title'], df['topic']))
+df['topic_name'] = app.name_topics((df['title'], df['topic']))
 
-df[['title', 'topic', 'topic_names']]
+df[['title', 'topic', 'topic_name']]
 ```
 
 
