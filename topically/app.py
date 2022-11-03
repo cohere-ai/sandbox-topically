@@ -72,7 +72,7 @@ class Topically(object):
         def name_cluster(cluster_number):
             # Get the texts in this cluster, sample from them
             cluster_texts = texts[cluster_assignments == cluster_number]
-            # sample_texts_from_cluster = cluster_texts.sample(num_sample_texts)
+
             if len(cluster_texts) > num_sample_texts:
                 sample_texts_from_cluster = np.random.choice(cluster_texts, num_sample_texts, replace=False)
             else:
