@@ -15,9 +15,6 @@ from topically.app import MockCohereAPI
 from topically.cluster_namers import ClusterNamer
 
 
-def test_cluster_namer():
-    assert True
-
 
 def test_reranker():
     """ Test that reranker properly orders generations by likelihood."""
@@ -34,7 +31,7 @@ def test_cluster_namer():
 
     app = Topically('', mockAPI=True)
 
-    cluster_names = app.name_clusters(([0, 0, 0], [1, 1, 1]), num_generations=5)
+    cluster_names, _ = app.name_topics(([0, 0, 0], [1, 1, 1]), num_generations=5)
 
     print(cluster_names)
     assert cluster_names == ['one', 'one', 'one']

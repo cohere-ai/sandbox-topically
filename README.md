@@ -34,6 +34,45 @@ Topically's first feature is to name clusters of texts based on their content. F
 <img src="./assets/topically-name_cluster.png" />
 
 
+# Usage Example
+Use Topically to name clusters in the course of topic modeling
+
+```python
+import topically
+
+app = topically.Topically('cohere_api_key')
+
+example_texts = [
+# Three headlines from the machine learning subreddit
+"[Project] From books to presentations in 10s with AR + ML",
+"[D] A Demo from 1993 of 32-year-old Yann LeCun showing off the World's first Convolutional Network for Text Recognition",
+"[R] First Order Motion Model applied to animate paintings",
+
+# Three headlines from the investing subreddit
+"Robinhood and other brokers literally blocking purchase of $GME, $NOK, $BB, $AMC; allow sells",
+"United Airlines stock down over 5% premarket trading",
+"Bitcoin was nearly $20,000 a year ago today"]
+
+# We know the first three texts belong to one topic (topic 0), the last three belong to another topic (topic 1)
+example_topics = [0, 0, 0, 1, 1, 1]
+
+cluster_names = app.name_clusters((example_texts, example_topics)) #Optional:  num_generations=5
+topic_names # Run again to get new suggested names. More text examples should result in better names.
+
+```
+
+Output:
+```
+['Text recognition',
+ 'Text recognition',
+ 'Text recognition',
+ 'Stock Market Closing Bell',
+ 'Stock Market Closing Bell',
+ 'Stock Market Closing Bell']
+ ```
+ 
+In this simple example, we know the cluster assignments. In actual applications, a topic modeling library like BERTopic can cluster the texts for us, and then we can name them with topically. 
+
 # Usage Example: Topically + BERTopic
 Use Topically to name clusters in the course of topic modeling with tools like BERTopic. Get the cluster assignments from BERTopic, and name the clusters with topically. Here's example code and a colab notebook demonstrating this.
 
@@ -56,9 +95,9 @@ df['topic'], probabilities = topic_model.fit_transform(df['title'], embeds)
 app = Topically('cohere_api_key')
 
 # name clusters
-df['cluster_names'] = app.name_clusters((df['title'], df['topic']))
+df['topic_names'] = app.name_topics((df['title'], df['topic']))
 
-df[['title', 'topic', 'cluster_names']]
+df[['title', 'topic', 'topic_names']]
 ```
 
 
