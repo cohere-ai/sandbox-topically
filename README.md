@@ -95,8 +95,9 @@ Code excerpt:
 from bertopic import BERTopic
 from topically import Topically
 
-# Load and initialize BERTopic
-topic_model = BERTopic(nr_topics=10)
+# Load and initialize BERTopic to use KMeans clustering with 8 clusters only.
+cluster_model = KMeans(n_clusters=8)
+topic_model = BERTopic(hdbscan_model=cluster_model)
 
 # df is a dataframe. df['title'] is the column of text we're modeling
 df['topic'], probabilities = topic_model.fit_transform(df['title'], embeds)
@@ -131,6 +132,15 @@ Topically uses a generative language model (GPT) to assign a name to the text cl
 To generate the titles, topically uses a couple of bundled prompts. To get the best names for your use case, it's best to edit the prompt to add more information about the context, and add good cluster names for 3-5 of your clusters.
 
 This works best on short texts (given the context length limitations of GPT models). If you're working with long texts, you may experiment with excerpts or summaries of the texts.
+
+# Architecture Overview
+Topically is pretty simple and early in its life. At the moment, it's made up of two main class:
+
+### `Topically`
+This class maintains the client to the Cohere platform, and exposes the main interaction point with Topically (name_topics, at the moment). It lives in app.py.
+
+### `ClusterNamer`
+This class deals with preparing the prompts and calling the Generate endpoint to generate suggested topic names. It lives in cluster_namers.py.
 
 # Get support
 If you have any questions or comments, please file an issue or reach out to us on [Discord](https://discord.gg/co-mmunity).
