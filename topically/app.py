@@ -28,7 +28,8 @@ class Topically(object):
 
             self.co = cohere.Client(api_key)
 
-    def name_clusters(self, X, prompt: str = '', num_generations=1, num_sample_texts=10):
+    #TODO: Encapsulate this functionality into cluter_namers 
+    def name_topics(self, X, prompt: str = '', num_generations=1, num_sample_texts=10):
         """
         Name clusters using the default prompt. For each cluster, calls the Cohere generate end-point to assign a name to the cluster.
         Example: If we have ten samples clustered into two clusters (0,1), this makes two generation API calls. That results in two cluster names. We return n_samples,
@@ -72,7 +73,12 @@ class Topically(object):
         def name_cluster(cluster_number):
             # Get the texts in this cluster, sample from them
             cluster_texts = texts[cluster_assignments == cluster_number]
-            sample_texts_from_cluster = cluster_texts.sample(num_sample_texts)
+
+            if len(cluster_texts) > num_sample_texts:
+                sample_texts_from_cluster = np.random.choice(cluster_texts, num_sample_texts, replace=False)
+            else:
+                sample_texts_from_cluster = cluster_texts
+
             cluster_name = cluster_namer.predict(sample_texts_from_cluster)
 
             logging.info(f'naming cluster {cluster_number}: {cluster_name}')
@@ -84,10 +90,11 @@ class Topically(object):
             for (cluster_number, cluster_name) in executor.map(name_cluster, unique_cluster_assignments):
                 cluster_names[cluster_number] = cluster_name
 
+
         # Create a list to store the cluster assignments per sample
         assigned_cluster_names = [cluster_names[cluster_number] for cluster_number in cluster_assignments]
 
-        return assigned_cluster_names
+        return assigned_cluster_names, cluster_names
 
     def name_cluster(self, cluster_texts, temperature=0.6, num_generations=1):
         """

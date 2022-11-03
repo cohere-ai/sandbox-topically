@@ -1,19 +1,18 @@
 [tool.poetry]
 name = "topically"
-version = "0.0.1"
+version = "0.0.4"
 description = ""
 authors = ["Jay Alammar <jay@cohere.ai>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.7"
 cohere = "^2.1"
-umap-learn = "^0.5"
-streamlit = "^1.12"
-altair = "^4.2"
-pandas = "^1.4"
-matplotlib = "^3.5"
-bertopic = {version = "*", extras = ["bertopic"]}
+pandas = "^1.2"
+bertopic = {version = "*", optional = true}
+
+[tool.poetry.extras]
+bertopic = ["bertopic"]
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.32"
