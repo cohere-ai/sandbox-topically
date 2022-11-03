@@ -24,10 +24,16 @@
 **Maintainer:** [jalammar](https://github.com/jalammar) \
 **Project maintained until at least:** 2023-04-30
 
+# A picture is worth a thousand sentences
+
+<img src="./assets/topic-modeling-picture-thousand-texts.png" />
+When you want to explore thousands or millions of texts (messages, emails, news headlines), topic modeling tools help you make sense of them in an instance.
+
 # Topically
 
 Topically is a \[work-in-progress\] suite of tools that help make sense of text collections (messages, articles, emails, news headlines) using large language models.
 
+<img src="./assets/topically_name_topics.png" />"
 
 Topically's first feature is to name clusters of texts based on their content. For example, here are news headlines from the machinelearning and investing subreddits, and the names suggested for them by topically:
 
@@ -56,7 +62,7 @@ example_texts = [
 # We know the first three texts belong to one topic (topic 0), the last three belong to another topic (topic 1)
 example_topics = [0, 0, 0, 1, 1, 1]
 
-cluster_names = app.name_clusters((example_texts, example_topics)) #Optional:  num_generations=5
+topic_names = app.name_topics((example_texts, example_topics)) #Optional:  num_generations=5
 topic_names # Run again to get new suggested names. More text examples should result in better names.
 
 ```
