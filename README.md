@@ -60,8 +60,8 @@ example_texts = [
 # We know the first three texts belong to one topic (topic 0), the last three belong to another topic (topic 1)
 example_topics = [0, 0, 0, 1, 1, 1]
 
-topic_names = app.name_topics((example_texts, example_topics)) #Optional:  num_generations=5
-topic_names # Run again to get new suggested names. More text examples should result in better names.
+topics_of_examples, topic_names_dict = app.name_topics((example_texts, example_topics)) #Optional:  num_generations=5
+topics_of_examples # Run again to get new suggested names. More text examples should result in better names.
 
 ```
 
