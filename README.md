@@ -106,7 +106,7 @@ df['topic'], probabilities = topic_model.fit_transform(df['title'], embeds)
 app = Topically('cohere_api_key')
 
 # name clusters
-df['topic_name'] = app.name_topics((df['title'], df['topic']))
+df['topic_name'], topic_names = app.name_topics((df['title'], df['topic']))
 
 df[['title', 'topic', 'topic_name']]
 ```
