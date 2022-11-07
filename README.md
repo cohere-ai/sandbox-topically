@@ -127,7 +127,7 @@ Optionally, you can also install topically with BERTopic:
 
 # How it works
 
-Topically uses a generative language model (GPT) to assign a name to the text cluster. It sends a request to Cohere's managed model (get an [API key](https://dashboard.cohere.ai/welcome/register?utm_source=github&utm_medium=content&utm_campaign=sandbox&utm_content=topically) and use it for free for prototyping).
+Topically uses a generative language model (GPT) to assign a name to the text cluster. It sends a request to [Cohere](https://cohere.ai/)'s managed model (get an [API key](https://dashboard.cohere.ai/welcome/register?utm_source=github&utm_medium=content&utm_campaign=sandbox&utm_content=topically) and use it for free for prototyping).
 
 To generate the titles, topically uses a couple of bundled prompts. To get the best names for your use case, it's best to edit the prompt to add more information about the context, and add good cluster names for 3-5 of your clusters.
 
@@ -137,7 +137,7 @@ This works best on short texts (given the context length limitations of GPT mode
 Topically is pretty simple and early in its life. At the moment, it's made up of two main class:
 
 ### `Topically`
-This class maintains the client to the Cohere platform, and exposes the main interaction point with Topically (name_topics, at the moment). It lives in app.py.
+This class maintains the client to the [Cohere](https://cohere.ai/) platform, and exposes the main interaction point with Topically (name_topics, at the moment). It lives in app.py.
 
 ### `ClusterNamer`
 This class deals with preparing the prompts and calling the Generate endpoint to generate suggested topic names. It lives in cluster_namers.py.
