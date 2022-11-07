@@ -137,8 +137,7 @@ This works best on short texts (given the context length limitations of GPT mode
 Topically is pretty simple and early in its life. At the moment, it's made up of two main class:
 
 ### `Topically`
-This class maintains the client to the 
-platform, and exposes the main interaction point with Topically (name_topics, at the moment). It lives in app.py.
+This class maintains the client to the [Cohere](https://cohere.ai/) platform, and exposes the main interaction point with Topically (name_topics, at the moment). It lives in app.py.
 
 ### `ClusterNamer`
 This class deals with preparing the prompts and calling the Generate endpoint to generate suggested topic names. It lives in cluster_namers.py.
