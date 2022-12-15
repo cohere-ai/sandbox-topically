@@ -13,7 +13,7 @@ from sklearn.base import BaseEstimator
 
 class ClusterNamer(BaseEstimator):
     """ Assign names to clusters of text based on their content using managed Language Models from Cohere."""
-    def __init__(self, co, prompt: str = '', num_generations: int = 1, temperature=0.6):
+    def __init__(self, co, prompt: str = '', num_generations: int = 1, temperature=0.6,source_model='KeyBert + Prompt'):
         """
         Name a cluster using the default prompt. Calls the Cohere generate end-point to assign a name to the cluster.
 
@@ -32,8 +32,9 @@ class ClusterNamer(BaseEstimator):
         self.prompt = prompt
         self.num_generations = num_generations
         self.temperature = temperature
+        self.source_model = source_model
 
-    def make_prompt(self, cluster_example_texts):
+    def make_prompt(self, cluster_example_texts,cluster_number):
         """
         Prepare the naming prompt by adding examples from a single cluster to the prompt.
 
@@ -49,9 +50,9 @@ class ClusterNamer(BaseEstimator):
 
         """
         # Add the data of the current cluster we want to label
-        return self.prompt + construct_example_for_prompt(cluster_example_texts)
+        return self.prompt + construct_example_for_prompt(cluster_example_texts,cluster_number,self.source_model)
 
-    def generate(self, cluster_example_texts):
+    def generate(self, cluster_example_texts,cluster_number):
         """
         Generate suggest topic name(s)
 
@@ -67,7 +68,7 @@ class ClusterNamer(BaseEstimator):
 
         """
         # Add the data of the current cluster we want to label
-        prompt = self.make_prompt(cluster_example_texts)
+        prompt = self.make_prompt(cluster_example_texts,cluster_number)
 
         # Generate using the language model
         request = self.co.generate(model='xlarge',
@@ -79,7 +80,7 @@ class ClusterNamer(BaseEstimator):
 
         return request.generations
 
-    def predict(self, texts):
+    def predict(self, texts,cluster_number):
         """
         Generate a name for a single topic
 
@@ -94,7 +95,7 @@ class ClusterNamer(BaseEstimator):
                The suggest name for the topic/cluster.
 
         """
-        gens = self.generate(texts)
+        gens = self.generate(texts,cluster_number)
 
         if self.num_generations > 1:
             gens = rerank_by_likelihood(gens)
@@ -130,7 +131,7 @@ def rerank_by_likelihood(generations: cohere.generation.Generations):
     return ordered_generations
 
 
-def construct_example_for_prompt(cluster_example_texts):
+def construct_example_for_prompt(cluster_example_texts,cluster_number,source_model):
     """
     Prepare a single portion of the prompt by stitching the texts as an example
 
@@ -145,10 +146,11 @@ def construct_example_for_prompt(cluster_example_texts):
            A portion of a naming prompt
 
     """
-    example_prompt_text = f'\nCluster:\nSample texts from this cluster:\n'
-    for text in cluster_example_texts:
-        example_prompt_text += f'- {text}\n'
+    if source_model == 'KeyBert + Prompt':
+        example_prompt_text = f'\nCluster:\nSample texts from this cluster:\n'
+        for text in cluster_example_texts:
+            example_prompt_text += f'- {text}\n'
+        example_prompt_text += f'Keywords: {cluster_number}\n'
+        example_prompt_text += f'Cluster name:'
 
-    example_prompt_text += f'Cluster name:'
-
-    return example_prompt_text
+        return example_prompt_text

@@ -14,12 +14,13 @@ import cohere
 import numpy as np
 
 from .cluster_namers import ClusterNamer
-from .prompts.prompts import generic_cluster_naming_prompt
+# from .prompts.prompts import generic_cluster_naming_prompt
+from .prompts.prompts_keybert import generic_cluster_naming_prompt_keybert
 
 
 class Topically(object):
 
-    def __init__(self, api_key: str = None, mockAPI: bool = False):
+    def __init__(self, source_model='KeyBert + Prompt',api_key: str = None, mockAPI: bool = False):
         if mockAPI:
             self.co = MockCohereAPI()
         else:
@@ -27,6 +28,7 @@ class Topically(object):
                 api_key = getpass.getpass('Enter your Cohere API Key')
 
             self.co = cohere.Client(api_key)
+            self.source_model = source_model
 
     #TODO: Encapsulate this functionality into cluter_namers 
     def name_topics(self, X, prompt: str = '', num_generations=1, num_sample_texts=10):
@@ -55,14 +57,16 @@ class Topically(object):
         if isinstance(texts, list):
             texts = np.array(texts)
 
-        if prompt == '':
-            prompt = generic_cluster_naming_prompt
+ 
+        if self.source_model == 'KeyBert + Prompt':
+            prompt = generic_cluster_naming_prompt_keybert
 
         # Instantiate ClusterNamer
-        cluster_namer = ClusterNamer(self.co, prompt, num_generations=num_generations)
+        cluster_namer = ClusterNamer(self.co, prompt, num_generations=num_generations,source_model=self.source_model)
 
         # Get the unique cluster assignments
         unique_cluster_assignments = np.unique(cluster_assignments)
+        print(unique_cluster_assignments)
 
         # Create a dictionary to store the cluster names for each cluster
         cluster_names = {}
@@ -79,7 +83,7 @@ class Topically(object):
             else:
                 sample_texts_from_cluster = cluster_texts
 
-            cluster_name = cluster_namer.predict(sample_texts_from_cluster)
+            cluster_name = cluster_namer.predict(sample_texts_from_cluster,cluster_number)
 
             logging.info(f'naming cluster {cluster_number}: {cluster_name}')
 
@@ -111,12 +115,11 @@ class Topically(object):
                The cluster name assigned to the cluster
 
         """
-
         # Create the prompt, starting with the global task description
         prompt = 'The following texts are from the same cluster. Please name the cluster.'
 
         # Add the data of the current cluster we want to label
-        prompt += self.construct_example_for_prompt(cluster_texts)
+        prompt += self.construct_example_for_prompt(cluster_texts,self.source_model)
 
         # Generate the cluster name
         cluster_name = self.generate(prompt, temperature=temperature, num_generations=num_generations)[0]
